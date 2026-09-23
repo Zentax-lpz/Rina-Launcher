@@ -1,5 +1,7 @@
 {
-  "title": "🔴 Rina is going LIVE",
-  "message": "I'm going LIVE at 10 PM tonight!",
-  "live": true
+  "title": "Welcome to Rina Launcher! ♡",
+  "message": "I will post live announcements here. Check back for updates!",
+  "date": "2026-09-23",
+  "tiktokLive": false,
+  "tiktokMessage": "TikTok Live status is controlled from this online announcement file."
 }
