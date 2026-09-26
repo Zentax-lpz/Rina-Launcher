@@ -1,0 +1,13 @@
+{
+  "name": "Rina Launcher",
+  "short_name": "Rina",
+  "description": "Rina Launcher — English and Kurdish Sorani community launcher.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#170711",
+  "theme_color": "#d94c9b",
+  "lang": "en",
+  "dir": "ltr"
+}

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#d94c9b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<title>Rina Launcher</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+
+/* Rina Launcher v2.1.5 — whole-option click interaction */
+.rina-option-click {
+  position: relative;
+  overflow: hidden;
+  transform-origin: center;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1),
+              filter .18s ease,
+              box-shadow .24s ease,
+              background-color .24s ease;
+  will-change: transform;
+}
+.rina-option-click.rina-active {
+  animation: rinaWholeOption .48s cubic-bezier(.2,.8,.2,1);
+}
+.rina-option-click.rina-active > * {
+  animation: rinaWholeContent .48s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes rinaWholeOption {
+  0%   { transform: scale(1); filter: brightness(1); }
+  28%  { transform: scale(.965); filter: brightness(1.16); }
+  55%  { transform: scale(1.018); filter: brightness(1.10); }
+  78%  { transform: scale(.994); filter: brightness(1.04); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+@keyframes rinaWholeContent {
+  0%   { transform: translateX(0); }
+  35%  { transform: translateX(2px); }
+  62%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+.rina-option-ripple {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255,255,255,.28);
+  transform: translate(-50%,-50%) scale(0);
+  animation: rinaOptionRipple .58s ease-out forwards;
+  z-index: 20;
+}
+@keyframes rinaOptionRipple {
+  to { transform: translate(-50%,-50%) scale(22); opacity: 0; }
+}
+@media (hover:hover) and (pointer:fine) {
+  .rina-option-click:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rina-option-click,
+  .rina-option-click.rina-active,
+  .rina-option-click.rina-active > *,
+  .rina-option-ripple { animation:none !important; transition:none !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-glow"></div>
+  <div class="loading-logo">Rina<span>♡</span></div>
+  <div class="loading-sub" data-i18n="launcher">LAUNCHER</div>
+  <div class="loading-welcome" data-i18n="loadingWelcome">Welcome to Rina Launcher</div>
+  <div class="loading-bar"><div id="loadingProgress"></div></div>
+  <div id="loadingPercent">0%</div>
+</div>
+
+<div class="launcher" id="appShell"><canvas id="particleCanvas" aria-hidden="true"></canvas>
+<aside class="sidebar">
+  <div class="brand"><div class="crown">♛</div><div class="rina-logo">Rina<span>♡</span></div><div class="brand-sub" data-i18n="launcher">LAUNCHER</div></div>
+  <nav>
+    <button class="nav active" data-page="home"><span>⌂</span><label data-i18n="home">Home</label></button>
+    <button class="nav" data-page="about"><span>ⓘ</span><label data-i18n="about">About</label></button>
+    <button class="nav" data-page="rules"><span>📜</span><label data-i18n="rules">Server Rules</label></button>
+    <button class="nav" data-page="discord"><span class="nav-discord-icon"><svg class="discord-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.01A16.83 16.83 0 0 0 15.86 3.9l-.47.96a15.4 15.4 0 0 0-6.78 0L8.14 3.9a16.83 16.83 0 0 0-3.68 1.11C2.13 8.39 1.5 11.68 1.82 14.92a16.95 16.95 0 0 0 5.05 2.56l1.09-1.47c-.6-.22-1.18-.49-1.73-.8l.42-.32c3.33 1.53 6.94 1.53 10.23 0l.42.32c-.55.31-1.13.58-1.73.8l1.09 1.47a16.95 16.95 0 0 0 5.05-2.56c.38-3.75-.64-7.01-2.17-9.91ZM8.85 13.22c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Zm6.3 0c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Z"/></svg></span><label data-i18n="discordServer">Discord Server</label></button>
+    <button class="nav" data-page="tiktok"><span>♪</span><label data-i18n="tiktokLive">TikTok Live</label></button>
+    <button class="nav" data-page="updates"><span>📢</span><label data-i18n="updates">Updates</label></button>
+    <button class="nav" data-page="reklam"><span>◇</span><label data-i18n="reklam">Reklam</label></button>
+    <button class="nav disabled-nav" data-page="youtube" disabled><span>▶</span><label data-i18n="youtubeComingSoon">YouTube (Coming Soon)</label></button>
+    <button class="nav" data-page="settings"><span>⚙</span><label data-i18n="settings">Settings</label></button>
+  </nav>
+  <div class="side-bottom"><div class="side-quote" data-i18n="sideQuote">Good People<br>Better Community ♡</div><div class="copyright">© 2026 Zentax - LPZ - DE<br><span data-i18n="allRights">All Rights Reserved</span></div></div>
+</aside>
+
+<main class="content-area">
+<header class="titlebar"><div data-i18n="titlebar">♡ &nbsp; Rina Launcher</div><div class="title-actions"><button id="quickLang" class="quick-lang" onclick="toggleLanguage()">کوردی</button><div class="window-buttons">
+<button type="button" aria-label="Minimize">−</button><button type="button" aria-label="Maximize">□</button><button type="button" aria-label="Close">×</button>
+</div></div></header>
+
+<div class="page-wrap">
+<section id="home" class="page active">
+  <div class="hero panel">
+    <div class="hero-copy"><div class="pill" data-i18n="launcherPill">Rina Launcher</div><h1 data-i18n-html="heroTitle">Connect.<br>Play.<br>Belong.</h1>
+    <p data-i18n-html="heroText">Join our Discord, catch our TikTok Live,<br>watch our future content and be part of our amazing<br>community!</p>
+    <button class="big-btn" onclick="openLink(DISCORD_URL)" data-i18n="joinDiscord"><span class="btn-discord-icon"><svg class="discord-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.01A16.83 16.83 0 0 0 15.86 3.9l-.47.96a15.4 15.4 0 0 0-6.78 0L8.14 3.9a16.83 16.83 0 0 0-3.68 1.11C2.13 8.39 1.5 11.68 1.82 14.92a16.95 16.95 0 0 0 5.05 2.56l1.09-1.47c-.6-.22-1.18-.49-1.73-.8l.42-.32c3.33 1.53 6.94 1.53 10.23 0l.42.32c-.55.31-1.13.58-1.73.8l1.09 1.47a16.95 16.95 0 0 0 5.05-2.56c.38-3.75-.64-7.01-2.17-9.91ZM8.85 13.22c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Zm6.3 0c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Z"/></svg></span> &nbsp; Join Our Discord &nbsp; →</button></div>
+    <div class="hero-writing" data-i18n-html="heroWriting">Same<br>Vibes<br><span>Bigger</span><br>Together ♡</div>
+    <div class="hero-tag" data-i18n-html="heroTag">“A Place<br>Where Friends<br>Become Family.”<br><small>– Rina Launcher</small></div>
+  </div>
+  <div class="four-cards">
+    <div class="panel mini-card"><div class="big-icon discord-mini-icon"><svg class="discord-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.01A16.83 16.83 0 0 0 15.86 3.9l-.47.96a15.4 15.4 0 0 0-6.78 0L8.14 3.9a16.83 16.83 0 0 0-3.68 1.11C2.13 8.39 1.5 11.68 1.82 14.92a16.95 16.95 0 0 0 5.05 2.56l1.09-1.47c-.6-.22-1.18-.49-1.73-.8l.42-.32c3.33 1.53 6.94 1.53 10.23 0l.42.32c-.55.31-1.13.58-1.73.8l1.09 1.47a16.95 16.95 0 0 0 5.05-2.56c.38-3.75-.64-7.01-2.17-9.91ZM8.85 13.22c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Zm6.3 0c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Z"/></svg></div><h3 data-i18n="discordServer">Discord Server</h3><p data-i18n="joinCommunity">Join our community</p><button onclick="openLink(DISCORD_URL)" data-i18n="joinNow">Join Now →</button></div>
+    <div class="panel mini-card"><div class="big-icon">♪</div><h3 data-i18n="tiktokLive">TikTok Live</h3><p data-i18n="watchLive">Watch me live</p><button onclick="openLink(TIKTOK_URL)" data-i18n="openTiktok">Open TikTok →</button></div>
+    <div class="panel mini-card disabled-card"><div class="big-icon">▶</div><h3 data-i18n="youtubeComingSoon">YouTube (Coming Soon)</h3><p data-i18n="youtubeComingSoonText">Coming soon ♡</p><button disabled data-i18n="youtubeComingSoonButton">Coming Soon</button></div>
+    <div class="panel mini-card"><div class="big-icon">♟</div><h3 data-i18n="aboutRina">About Rina</h3><p data-i18n="learnAbout">Learn more about us</p><button onclick="showPage('about')" data-i18n="readMore">Read More →</button></div>
+  </div>
+  <div class="panel announcement-board" id="announcementBoard">
+    <div class="announcement-head"><div><div class="announcement-kicker" data-i18n="announcementKicker">📢 LIVE UPDATE BOARD</div><h3 id="announcementTitle">Loading…</h3></div><span id="announcementDate" class="announcement-date"></span></div>
+    <p id="announcementMessage" class="announcement-message">Checking for the latest announcement…</p>
+    <div class="announcement-footer"><span id="announcementLiveBadge" class="live-badge offline"><span class="badge-dot"></span><span id="announcementLiveText">OFFLINE</span></span><button class="small-btn" onclick="openLink(TIKTOK_URL)" data-i18n="openTiktok">Open TikTok →</button></div>
+  </div>
+  <div class="bottom-row">
+    <div class="panel news"><h3 data-i18n="latestNews">📢 &nbsp;Latest News</h3><div><span>22. Sep 2026</span> <span class="news-text" data-i18n="news1">Rina Launcher is now online! ♡</span></div><div><span data-i18n="today">Today</span> <span class="news-text" data-i18n="news2">Welcome to our community!</span></div><div><span data-i18n="next">Next</span> <span class="news-text" data-i18n="news3">New events coming soon!</span></div></div>
+    <div class="panel status"><h3 data-i18n="serverStatus">♟ &nbsp;Server Status</h3><div class="online"><b></b> <span data-i18n="online">Online</span></div><p data-i18n="systemsOperational">All systems operational</p></div>
+    <div class="panel story"><div class="heart">♥</div><div><h3 data-i18n="storyTitle">Be Part of Our Story</h3><p data-i18n="storyText">Follow. Join. Watch. Support. ♡</p></div></div>
+  </div>
+</section>
+
+<section id="about" class="page"><div class="panel inner">
+<h2 data-i18n="aboutTitle">About Our Server</h2><p class="lead" data-i18n="aboutLead">More than a Community — A Family ♡</p>
+<p data-i18n="aboutText">Welcome to our community! This is a place to meet people, chat, play games, share clips and enjoy live content together. Please read and follow our server rules so everyone can have a safe and friendly experience.</p>
+<div class="credit-block" data-i18n-html="credit">Created &amp; developed by<br><strong>Zentax - LPZ - DE</strong><br><span>© 2026 All Rights Reserved.</span></div>
+</div></section>
+
+<section id="rules" class="page"><div class="rules-header">
+<h2 data-i18n="rulesTitle">📜 Server Rules</h2><p data-i18n="rulesSubtitle">English &amp; کوردیی سۆرانی</p>
+<div class="lang-tabs"><button id="enTab" class="lang active" onclick="setLang('en')">🇬🇧 English</button><button id="kuTab" class="lang" onclick="setLang('ku')">🟡 کوردی (سۆرانی)</button></div>
+</div>
+<div id="rulesEn" class="rules-grid"></div>
+<div id="rulesKu" class="rules-grid rtl" dir="rtl" hidden></div>
+</section>
+
+<section id="discord" class="page"><div class="panel inner discord-showcase"><div class="discord-orb"><svg class="discord-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.01A16.83 16.83 0 0 0 15.86 3.9l-.47.96a15.4 15.4 0 0 0-6.78 0L8.14 3.9a16.83 16.83 0 0 0-3.68 1.11C2.13 8.39 1.5 11.68 1.82 14.92a16.95 16.95 0 0 0 5.05 2.56l1.09-1.47c-.6-.22-1.18-.49-1.73-.8l.42-.32c3.33 1.53 6.94 1.53 10.23 0l.42.32c-.55.31-1.13.58-1.73.8l1.09 1.47a16.95 16.95 0 0 0 5.05-2.56c.38-3.75-.64-7.01-2.17-9.91ZM8.85 13.22c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Zm6.3 0c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Z"/></svg></div><h2 data-i18n="discordTitle">Join Our Discord Server</h2><p class="lead" data-i18n="discordLead">Chat. Play. Make Friends. Be Part of Our Family ♡</p><ul id="discordList"></ul><button class="big-btn" onclick="openLink(DISCORD_URL)" data-i18n="joinDiscordNow"><span class="btn-discord-icon"><svg class="discord-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.54 5.01A16.83 16.83 0 0 0 15.86 3.9l-.47.96a15.4 15.4 0 0 0-6.78 0L8.14 3.9a16.83 16.83 0 0 0-3.68 1.11C2.13 8.39 1.5 11.68 1.82 14.92a16.95 16.95 0 0 0 5.05 2.56l1.09-1.47c-.6-.22-1.18-.49-1.73-.8l.42-.32c3.33 1.53 6.94 1.53 10.23 0l.42.32c-.55.31-1.13.58-1.73.8l1.09 1.47a16.95 16.95 0 0 0 5.05-2.56c.38-3.75-.64-7.01-2.17-9.91ZM8.85 13.22c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Zm6.3 0c-1 0-1.82-.92-1.82-2.05s.8-2.05 1.82-2.05 1.83.92 1.82 2.05c0 1.13-.8 2.05-1.82 2.05Z"/></svg></span> &nbsp; Join Discord Now &nbsp; →</button></div></section>
+
+<section id="tiktok" class="page"><div class="panel inner"><h2 data-i18n="tiktokTitle">Watch My TikTok Live</h2><p class="lead" data-i18n="tiktokLead">Live Streams, Fun Moments &amp; More ♡</p><div class="tiktok-live-status" id="tiktokStatusBox"><span id="tiktokLiveDot" class="live-dot"></span><strong id="tiktokStatusText" data-i18n="tiktokStatusOffline">OFFLINE</strong><small id="tiktokStatusNote" data-i18n="tiktokStatusNote">Live status is controlled online from the Rina Launcher announcement board.</small></div><div class="tiktok-box"><div class="video-placeholder">♪</div><div><h3 data-i18n="latestTiktok">Latest TikTok</h3><p data-i18n="tiktokPlaceholder">Automatic latest-video integration will be added with TikTok API authorization.</p><button class="big-btn" onclick="openLink(TIKTOK_URL)" data-i18n="openTiktok">Open TikTok →</button></div></div></div></section>
+
+<section id="updates" class="page"><div class="panel inner updates-page">
+<h2 data-i18n="updatesTitle">📢 Rina Updates</h2><p class="lead" data-i18n="updatesLead">Announcements from Rina — updated online without reinstalling the launcher.</p>
+<div class="panel announcement-board announcement-board-large">
+  <div class="announcement-head"><div><div class="announcement-kicker" data-i18n="announcementKicker">📢 LIVE UPDATE BOARD</div><h3 id="announcementTitleLarge">Loading…</h3></div><span id="announcementDateLarge" class="announcement-date"></span></div>
+  <p id="announcementMessageLarge" class="announcement-message">Checking for the latest announcement…</p>
+  <div class="announcement-footer"><span id="announcementLiveBadgeLarge" class="live-badge offline"><span class="badge-dot"></span><span id="announcementLiveTextLarge">OFFLINE</span></span><button class="big-btn" onclick="openLink(TIKTOK_URL)" data-i18n="openTiktok">Open TikTok →</button></div>
+</div>
+<p class="online-note" data-i18n="announcementNote">This board is read online from the Rina Launcher GitHub repository.</p>
+</div></section>
+
+<section id="reklam" class="page"><div class="panel inner reklam-page"><div class="reklam-icon">◇</div><h2 data-i18n="reklamTitle">Reklam</h2><p class="lead" data-i18n="reklamLead">Online advertisement</p><div id="reklamBox" class="reklam-box"><div id="reklamEmpty" class="reklam-empty" data-i18n="reklamEmpty">No advertisement is available right now.</div><div id="reklamContent" hidden><div class="reklam-label" data-i18n="reklamLinkLabel">Link from GitHub</div><a id="reklamLink" href="#" target="_blank" rel="noreferrer"></a><button id="reklamOpen" class="big-btn" data-i18n="reklamOpen">Open Link →</button></div></div></div></section>
+
+<section id="youtube" class="page"><div class="panel inner disabled-page"><h2 data-i18n="youtubeComingSoon">YouTube (Coming Soon)</h2><p class="lead" data-i18n="youtubeComingSoonText">Coming soon ♡</p><button class="big-btn" disabled data-i18n="youtubeComingSoonButton">Coming Soon</button></div></section>
+
+<section id="settings" class="page"><div class="panel inner"><h2 data-i18n="settingsTitle">⚙ Settings</h2><p class="lead" data-i18n="settingsLead">Customize Your Experience ♡</p><div class="setting"><span data-i18n="language">Language</span><div class="language-switch"><button id="settingsEn" class="lang active" onclick="setLanguage('en')">🇬🇧 English</button><button id="settingsKu" class="lang" onclick="setLanguage('ku')">🟡 کوردی</button></div></div><div class="setting update-setting"><div><strong data-i18n="launcherUpdates">Launcher Updates</strong><small id="updateStatus" data-i18n="updateReady">Check for a new Rina Launcher version.</small></div><button id="updateBtn" class="small-btn" onclick="checkForUpdates()" data-i18n="checkUpdates">Check for Updates</button></div>
+<div class="setting"><span data-i18n="backgroundBlur">Background Blur</span><input type="checkbox" checked></div><div class="setting"><span data-i18n="particles">Particles Effect</span><input type="checkbox" checked></div><div class="setting"><span data-i18n="pinkTheme">Pink Theme</span><input type="checkbox" checked></div><div class="setting"><span data-i18n="animations">Animations</span><input id="animationsToggle" type="checkbox" checked></div></div></section>
+
+</div>
+<footer><span data-i18n="footer">Rina Launcher &nbsp; v2.1.3 &nbsp; | &nbsp; © 2026 Zentax - LPZ - DE</span><button id="footerUpdateBtn" class="small-btn" onclick="checkForUpdates()" data-i18n="checkUpdates">Check for Updates</button></footer>
+</main>
+</div>
+<script>
+const DISCORD_URL="https://discord.gg/UWQhk7mrp";
+const TIKTOK_URL="https://www.tiktok.com/@dariinaata";
+const YOUTUBE_URL="https://www.youtube.com/";
+
+const translations={
+ en:{
+  launcher:"LAUNCHER",reklam:"Reklam",reklamTitle:"Reklam",reklamLead:"Online advertisement",reklamEmpty:"No advertisement is available right now.",reklamLinkLabel:"Link from GitHub",reklamOpen:"Open Link →",animations:"Animations",updates:"Updates",updatesTitle:"📢 Rina Updates",updatesLead:"Announcements from Rina — updated online without reinstalling the launcher.",announcementKicker:"📢 LIVE UPDATE BOARD",announcementNote:"This board is read online from the Rina Launcher GitHub repository.",loadingWelcome:"Welcome to Rina Launcher",home:"Home",about:"About",rules:"Server Rules",discordServer:"Discord Server",tiktokLive:"TikTok Live",youtube:"YouTube",youtubeComingSoon:"YouTube (Coming Soon)",youtubeComingSoonText:"Coming soon ♡",youtubeComingSoonButton:"Coming Soon",settings:"Settings",sideQuote:"Good People<br>Better Community ♡",allRights:"All Rights Reserved",titlebar:"♡ &nbsp; Rina Launcher",launcherPill:"Rina Launcher",heroTitle:"Connect.<br>Play.<br>Belong.",heroText:"Join our Discord, catch our TikTok Live,<br>watch our future content and be part of our amazing<br>community!",joinDiscord:"● &nbsp; Join Our Discord &nbsp; →",heroWriting:"Same<br>Vibes<br><span>Bigger</span><br>Together ♡",heroTag:"“A Place<br>Where Friends<br>Become Family.”<br><small>– Rina Launcher</small>",joinCommunity:"Join our community",joinNow:"Join Now →",watchLive:"Watch me live",openTiktok:"Open TikTok →",checkContent:"Check out our content",openYoutube:"Open YouTube →",aboutRina:"About Rina",learnAbout:"Learn more about us",readMore:"Read More →",latestNews:"📢 &nbsp;Latest News",news1:"Rina Launcher is now online! ♡",today:"Today",news2:"Welcome to our community!",next:"Next",news3:"New events coming soon!",serverStatus:"♟ &nbsp;Server Status",online:"Online",systemsOperational:"All systems operational",storyTitle:"Be Part of Our Story",storyText:"Follow. Join. Watch. Support. ♡",aboutTitle:"About Our Server",aboutLead:"More than a Community — A Family ♡",aboutText:"Welcome to our community! This is a place to meet people, chat, play games, share clips and enjoy live content together. Please read and follow our server rules so everyone can have a safe and friendly experience.",credit:"Created &amp; developed by<br><strong>Zentax - LPZ - DE</strong><br><span>© 2026 All Rights Reserved.</span>",rulesTitle:"📜 Server Rules",rulesSubtitle:"English &amp; کوردیی سۆرانی",discordTitle:"Join Our Discord Server",discordLead:"Chat. Play. Make Friends. Be Part of Our Family ♡",joinDiscordNow:"● &nbsp; Join Discord Now &nbsp; →",tiktokTitle:"Watch My TikTok Live",tiktokLead:"Live Streams, Fun Moments &amp; More ♡",latestTiktok:"Latest TikTok",tiktokStatusOffline:"OFFLINE",tiktokStatusNote:"Live status is controlled online from the Rina Launcher announcement board.",tiktokPlaceholder:"Automatic latest-video integration will be added with TikTok API authorization.",youtubeTitle:"Check Out My YouTube",youtubeLead:"Content, Highlights, Tutorials &amp; More ♡",openYoutubeNow:"▶ &nbsp; Open YouTube &nbsp; →",settingsTitle:"⚙ Settings",settingsLead:"Customize Your Experience ♡",launcherUpdates:"Launcher Updates",updateReady:"Check for a new Rina Launcher version.",checkUpdates:"Check for Updates",language:"Language",backgroundBlur:"Background Blur",particles:"Particles Effect",pinkTheme:"Pink Theme",footer:"Rina Launcher &nbsp; v2.1.3 &nbsp; | &nbsp; © 2026 Zentax - LPZ - DE"
+ },
+ ku:{
+  launcher:"لانچەر",reklam:"ڕیکلام",reklamTitle:"ڕیکلام",reklamLead:"ڕیکلامی ئۆنلاین",reklamEmpty:"ئێستا هیچ ڕیکلامێک بەردەست نییە.",reklamLinkLabel:"بەستەر لە GitHub",reklamOpen:"بەستەرەکە بکەرەوە ←",animations:"جوڵانەوەکان",updates:"نوێکردنەوەکان",updatesTitle:"📢 نوێکردنەوەکانی Rina",updatesLead:"ڕاگەیاندنەکانی Rina — بەبێ دامەزراندنەوەی لانچەر لەسەر ئینتەرنێت نوێ دەکرێنەوە.",announcementKicker:"📢 بۆردی ڕاگەیاندنی ڕاستەوخۆ",announcementNote:"ئەم بۆردە بە شێوەی ئۆنلاین لە GitHub ـی Rina Launcher دەخوێندرێتەوە.",loadingWelcome:"بەخێربێیت بۆ Rina Launcher",home:"سەرەتا",about:"دەربارە",rules:"یاساکانی سێرڤەر",discordServer:"سێرڤەری Discord",tiktokLive:"TikTok Live",youtube:"YouTube",youtubeComingSoon:"YouTube (بە زوویی دێت)",youtubeComingSoonText:"بە زوویی دێت ♡",youtubeComingSoonButton:"بە زوویی دێت",settings:"ڕێکخستنەکان",sideQuote:"خەڵکی باش<br>کۆمەڵگەی باشتر ♡",allRights:"هەموو مافەکان پارێزراون",titlebar:"♡ &nbsp; Rina Launcher",launcherPill:"Rina Launcher",heroTitle:"پەیوەندی بکە.<br>یاری بکە.<br>بەشێک بە.",heroText:"بەشداری Discord ـەکەمان بکە، TikTok Live ـەکەمان ببینە،<br>لە ناوەڕۆکی داهاتوومان چێژ وەربگرە و ببە بەشێک لە کۆمەڵگەکەمان!",joinDiscord:"بەشداری Discord بکە &nbsp; →",heroWriting:"هەمان<br>هەست<br><span>گەورەتر</span><br>پێکەوە ♡",heroTag:"«شوێنێک بۆ<br>ئەوەی هاوڕێکان<br>بنەماڵە ببن.»<br><small>– Rina Launcher</small>",joinCommunity:"بەشداری کۆمەڵگەکەمان بکە",joinNow:"ئێستا بەشداربە ←",watchLive:"بە ڕاستەوخۆ سەیری بکە",openTiktok:"TikTok بکەرەوە ←",checkContent:"ناوەڕۆکەکانمان ببینە",openYoutube:"YouTube بکەرەوە ←",aboutRina:"دەربارەی Rina",learnAbout:"زیاتر دەربارەمان بزانە",readMore:"زیاتر بخوێنەوە ←",latestNews:"📢 &nbsp;هەواڵە نوێکان",news1:"Rina Launcher ئێستا بەردەستە! ♡",today:"ئەمڕۆ",news2:"بەخێربێن بۆ کۆمەڵگەکەمان!",next:"داهاتوو",news3:"ڕووداوە نوێکان بە زوویی دێن!",serverStatus:"♟ &nbsp;دۆخی سێرڤەر",online:"چالاکە",systemsOperational:"هەموو سیستەمەکان بە کارن",storyTitle:"بەشێک بە لە چیرۆکەکەمان",storyText:"بەدواداچوون. بەشداری. سەیرکردن. پشتگیری. ♡",aboutTitle:"دەربارەی سێرڤەرەکەمان",aboutLead:"زیاتر لە کۆمەڵگە — بنەماڵەیەک ♡",aboutText:"بەخێربێیت بۆ کۆمەڵگەکەمان! ئەمە شوێنێکە بۆ ناسینی خەڵک، چاتکردن، یاریکردن، هاوبەشکردنی کلیپ و چێژ وەرگرتن لە ناوەڕۆکی ڕاستەوخۆ پێکەوە. تکایە یاساکانی سێرڤەر بخوێنەوە و پەیڕەویان بکە بۆ ئەوەی هەمووان ئەزموونێکی ئارام و دۆستانەیان هەبێت.",credit:"دروستکراو و پەرەپێدراوە لەلایەن<br><strong>Zentax - LPZ - DE</strong><br><span>© 2026 هەموو مافەکان پارێزراون.</span>",rulesTitle:"📜 یاساکانی سێرڤەر",rulesSubtitle:"English &amp; کوردیی سۆرانی",discordTitle:"بەشداری سێرڤەری Discord ـەکەمان بکە",discordLead:"چات بکە. یاری بکە. هاوڕێ دروست بکە. ببە بەشێک لە بنەماڵەکەمان ♡",joinDiscordNow:"ئێستا بەشداری Discord بکە &nbsp; →",tiktokTitle:"TikTok Live ـەکەم ببینە",tiktokLead:"پەخشی ڕاستەوخۆ، ساتە خۆشەکان و زیاتر ♡",latestTiktok:"نوێترین TikTok",tiktokStatusOffline:"ئۆفلاین",tiktokStatusNote:"دۆخی LIVE بە ئۆنلاین لە بۆردی ڕاگەیاندنی Rina کۆنترۆڵ دەکرێت.",tiktokPlaceholder:"بەستنەوەی خۆکاری نوێترین ڤیدیۆ بە API ـی TikTok و ڕێگەپێدان زیاد دەکرێت.",youtubeTitle:"YouTube ـەکەم ببینە",youtubeLead:"ناوەڕۆک، هایلایت، فێرکاری و زیاتر ♡",openYoutubeNow:"▶ &nbsp; YouTube بکەرەوە &nbsp; →",settingsTitle:"⚙ ڕێکخستنەکان",settingsLead:"ئەزموونی خۆت ڕێکبخە ♡",launcherUpdates:"نوێکردنەوەی لانچەر",updateReady:"بۆ وەشانی نوێی Rina Launcher بپشکنە.",checkUpdates:"بۆ نوێکردنەوە بپشکنە",language:"زمان",backgroundBlur:"تاریكکردنی پشتەوە",particles:"کاریگەری پارتیکل",pinkTheme:"ڕووکاری پەمەیی",footer:"Rina Launcher &nbsp; v2.1.3 &nbsp; | &nbsp; © 2026 Zentax - LPZ - DE"
+ }
+};
+
+const rules={
+ en:[
+  ["01","Be respectful","No insults, harassment, or drama."],["02","No spamming","Keep chat clean and readable."],["03","Play fair","No cheating, hacking, or exploiting games."],["04","Stay friendly","Make everyone feel welcome."],["05","Use the right channels","Post game clips, memes, or chats in their proper places."],["06","No toxic behavior","Avoid rage, trolling, or starting fights."],["07","Voice chat etiquette","No yelling, ear-rape, or background noise."],["08","Privacy first","Don’t share personal info (yours or others’)."],["09","Follow Discord TOS","No banned content or underage issues."],["10","Don’t ask for roles","Roles are given by the server team when appropriate."],["11","Have fun ♡","Be chill and enjoy gaming together."]
+ ],
+ ku:[
+  ["٠١","ڕێزگرتن","بێ سووکایەتی، هەراسانکردن یان دراما."],["٠٢","بێ سپام","چات بە پاکی و خوێنەرەوە بهێڵەوە."],["٠٣","بە دادپەروەری یاری بکە","هیچ فێڵکردن، هاککردن یان بەکارهێنانی کەلێنی یاری مەکە."],["٠٤","دۆستانە بمێنەرەوە","وا لە هەمووان بکە هەستی بە بەخێرهاتن بکەن."],["٠٥","کەناڵی گونجاو بەکاربهێنە","کلیپی یاری، میم و چات لە شوێنی گونجاودا بڵاو بکەرەوە."],["٠٦","بێ ڕەفتاری ژەهراوی","دوور بە لە تووڕەیی، ترۆلکردن یان دەستپێکردنی شەڕ."],["٠٧","ئادابی چاتی دەنگی","هاوارکردن، دەنگی ئازاردهر و ژاوەژاوی پاشبنەما مەکە."],["٠٨","نهێنییەکان بپارێزە","زانیاری کەسی خۆت یان کەسانی تر هاوبەش مەکە."],["٠٩","شوێن یاساکانی Discord بکە","هیچ ناوەڕۆکی قەدەغەکراو یان کێشەی خوار تەمەنی یاسایی نییە."],["١٠","داوای ڕۆڵ مەکە","ڕۆڵەکان بە پێی پێویستی لەلایەن تیمی سێرڤەرەوە دەدرێن."],["١١","کاتێکی خۆش بەسەر بەرە ♡","ئارام بە و پێکەوە لە یاریکردن چێژ وەربگرە."]
+ ]
+};
+
+const discordBullets={en:["Meet amazing people","Join events & giveaways","Stay updated with news","Read our English & Sorani rules"],ku:["کەسانی نایاب بناسە","بەشداری ڕووداو و پێشکەشکردنەکان بکە","لە هەواڵە نوێکان ئاگادار بە","یاساکانی ئینگلیزی و سۆرانی بخوێنەوە"]};
+const pages=document.querySelectorAll('.page'),navs=document.querySelectorAll('.nav');
+let currentLang=localStorage.getItem('rinaLanguage')||'en';
+function showPage(id){pages.forEach(p=>p.classList.toggle('active',p.id===id));navs.forEach(n=>n.classList.toggle('active',n.dataset.page===id));}
+navs.forEach(n=>n.addEventListener('click',()=>showPage(n.dataset.page)));
+function openLink(url){window.open(url,'_blank');}
+function renderRules(){
+ document.getElementById('rulesEn').innerHTML=rules.en.map(r=>`<div class="rule panel"><b>${r[0]}</b><h3>${r[1]}</h3><p>${r[2]}</p></div>`).join('');
+ document.getElementById('rulesKu').innerHTML=rules.ku.map(r=>`<div class="rule panel"><b>${r[0]}</b><h3>${r[1]}</h3><p>${r[2]}</p></div>`).join('');
+}
+function renderDiscordBullets(){document.getElementById('discordList').innerHTML=discordBullets[currentLang].map(x=>`<li>${x}</li>`).join('');}
+function applyLanguage(lang){
+ currentLang=lang; localStorage.setItem('rinaLanguage',lang);
+ const t=translations[lang];
+ document.documentElement.lang=lang==='ku'?'ku':'en'; document.documentElement.dir=lang==='ku'?'rtl':'ltr'; document.body.classList.toggle('kurdish',lang==='ku');
+ document.querySelectorAll('[data-i18n]').forEach(el=>el.innerHTML=t[el.dataset.i18n]);
+ document.querySelectorAll('[data-i18n-html]').forEach(el=>el.innerHTML=t[el.dataset.i18nHtml]);
+ document.getElementById('rulesEn').hidden=lang!=='en'; document.getElementById('rulesKu').hidden=lang!=='ku';
+ document.getElementById('enTab').classList.toggle('active',lang==='en'); document.getElementById('kuTab').classList.toggle('active',lang==='ku');
+ document.getElementById('settingsEn').classList.toggle('active',lang==='en'); document.getElementById('settingsKu').classList.toggle('active',lang==='ku');
+ document.getElementById('quickLang').textContent=lang==='en'?'کوردی':'English';
+ renderDiscordBullets();
+}
+function setLanguage(lang){applyLanguage(lang);}
+function setLang(lang){applyLanguage(lang);}
+function toggleLanguage(){applyLanguage(currentLang==='en'?'ku':'en');}
+renderRules();
+applyLanguage(currentLang);
+wireSettings();
+
+function setUpdateText(key, fallback){
+  const el=document.getElementById('updateStatus');
+  if(el) el.textContent=fallback || key;
+}
+function checkForUpdates(){
+  setUpdateText('checking','Checking for updates…');
+  const el=document.getElementById('updateStatus');
+  if(el) el.textContent=currentLang==='ku'?'وەشانی وێب پێویستی بە نوێکردنەوەی دەستی نییە.':'The web version updates automatically when the site is redeployed.';
+}
+
+
+
+// Background particle effect
+const particleCanvas=document.getElementById('particleCanvas');
+const particleCtx=particleCanvas?.getContext('2d');
+let particleItems=[];
+function resizeParticles(){
+  if(!particleCanvas) return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  particleCanvas.width=Math.floor(window.innerWidth*dpr);
+  particleCanvas.height=Math.floor(window.innerHeight*dpr);
+  particleCanvas.style.width=window.innerWidth+'px';
+  particleCanvas.style.height=window.innerHeight+'px';
+  particleCtx.setTransform(dpr,0,0,dpr,0,0);
+  particleItems=Array.from({length:42},()=>({
+    x:Math.random()*window.innerWidth,
+    y:Math.random()*window.innerHeight,
+    r:Math.random()*2.2+0.7,
+    vx:(Math.random()-.5)*0.18,
+    vy:-Math.random()*0.22-.04,
+    a:Math.random()*.45+.15,
+    phase:Math.random()*Math.PI*2
+  }));
+}
+function animateParticles(time=0){
+  if(!particleCanvas||!particleCtx) return;
+  particleCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+  if(!document.body.classList.contains('no-particles')){
+    for(const q of particleItems){
+      q.x+=q.vx; q.y+=q.vy;
+      q.phase+=0.012;
+      if(q.y<-10){q.y=window.innerHeight+10;q.x=Math.random()*window.innerWidth;}
+      if(q.x<-10) q.x=window.innerWidth+10;
+      if(q.x>window.innerWidth+10) q.x=-10;
+      const alpha=Math.max(.05,q.a+Math.sin(q.phase)*.12);
+      particleCtx.beginPath();
+      particleCtx.fillStyle=`rgba(255,145,210,${alpha})`;
+      particleCtx.shadowBlur=10;
+      particleCtx.shadowColor='rgba(255,100,190,.5)';
+      particleCtx.arc(q.x,q.y,q.r,0,Math.PI*2);
+      particleCtx.fill();
+    }
+    particleCtx.shadowBlur=0;
+  }
+  requestAnimationFrame(animateParticles);
+}
+window.addEventListener('resize',resizeParticles);
+resizeParticles();
+requestAnimationFrame(animateParticles);
+
+const ANNOUNCEMENT_URL="https://raw.githubusercontent.com/Zentax-lpz/Rina-Launcher/main/announcement.json";
+
+function setAnnouncementUI(prefix, data){
+  const title=document.getElementById(prefix==='main'?'announcementTitle':'announcementTitleLarge');
+  const msg=document.getElementById(prefix==='main'?'announcementMessage':'announcementMessageLarge');
+  const date=document.getElementById(prefix==='main'?'announcementDate':'announcementDateLarge');
+  const badge=document.getElementById(prefix==='main'?'announcementLiveBadge':'announcementLiveBadgeLarge');
+  const liveText=document.getElementById(prefix==='main'?'announcementLiveText':'announcementLiveTextLarge');
+  if(!title||!msg||!date||!badge||!liveText) return;
+  const tiktokBox=document.getElementById('tiktokStatusBox');
+  const tiktokDot=document.getElementById('tiktokLiveDot');
+  const tiktokText=document.getElementById('tiktokStatusText');
+  const tiktokNote=document.getElementById('tiktokStatusNote');
+  title.textContent=data.title || 'Rina Update';
+  msg.textContent=data.message || '';
+  date.textContent=data.date || '';
+  const live=Boolean(data.tiktokLive);
+  badge.classList.toggle('live',live);
+  badge.classList.toggle('offline',!live);
+  liveText.textContent=live ? (currentLang==='ku'?'ئێستا LIVE ـە':'LIVE NOW') : (currentLang==='ku'?'ئۆفلاین':'OFFLINE');
+  if(tiktokBox){
+    tiktokBox.classList.toggle('is-live',live);
+    tiktokDot.style.background=live?'#ff3f67':'#aaa';
+    tiktokDot.style.boxShadow=live?'0 0 12px #ff3f67':'0 0 8px rgba(255,255,255,.18)';
+    tiktokText.textContent=live ? (currentLang==='ku'?'🔴 ئێستا LIVE ـە':'🔴 LIVE NOW') : (currentLang==='ku'?'⚪ ئۆفلاین':'⚪ OFFLINE');
+    if(tiktokNote) tiktokNote.textContent=data.tiktokMessage || (live ? (currentLang==='ku'?'لە TikTok ـدا لە ڕاستەوخۆین.':'Live on TikTok right now.') : (currentLang==='ku'?'دۆخی LIVE لە بۆردی ئۆنلاین کۆنترۆڵ دەکرێت.':'Live status is controlled from the online board.'));
+  }
+}
+
+
+function setReklam(link){
+  const content=document.getElementById('reklamContent'); const empty=document.getElementById('reklamEmpty'); const a=document.getElementById('reklamLink'); const btn=document.getElementById('reklamOpen');
+  const value=typeof link==='string'?link.trim():'';
+  const valid=/^https?:\/\/\S+$/i.test(value);
+  if(!valid){ content.hidden=true; empty.hidden=false; return; }
+  content.hidden=false; empty.hidden=true; a.textContent=value; a.href=value; btn.onclick=()=>openLink(value);
+}
+
+
+function wireSettings(){
+  const toggles=[...document.querySelectorAll('.setting input[type="checkbox"]')];
+  toggles.forEach((el,i)=>{ const key=['blur','particles','pink','animations'][i]; if(!key) return; const saved=localStorage.getItem('rinaSetting_'+key); if(saved!==null) el.checked=saved==='1'; el.addEventListener('change',()=>{localStorage.setItem('rinaSetting_'+key,el.checked?'1':'0'); applySetting(key,el.checked);}); applySetting(key,el.checked); });
+}
+function applySetting(key,on){
+  document.body.classList.toggle('no-blur',key==='blur'&&!on);
+  document.body.classList.toggle('no-particles',key==='particles'&&!on);
+  document.body.classList.toggle('no-pink',key==='pink'&&!on);
+  document.body.classList.toggle('no-animations',key==='animations'&&!on);
+}
+
+async function loadAnnouncement(){
+  try{
+    const response=await fetch(ANNOUNCEMENT_URL+'?t='+Date.now(), {cache:'no-store'});
+    if(!response.ok) throw new Error('Announcement request failed');
+    const data=await response.json();
+    setAnnouncementUI('main',data);
+    setReklam(data.reklam || data.adLink || data.ad || "");
+    setAnnouncementUI('large',data);
+  }catch(error){
+    console.warn('Announcement board unavailable:',error);
+    setAnnouncementUI('main',{title:currentLang==='ku'?'ڕاگەیاندن بەردەست نییە':'Updates unavailable',message:currentLang==='ku'?'پەیوەندی بە سەرچاوەی ئۆنلاین نەکرا.':'Could not reach the online announcement board.',date:''});
+    setAnnouncementUI('large',{title:currentLang==='ku'?'ڕاگەیاندن بەردەست نییە':'Updates unavailable',message:currentLang==='ku'?'پەیوەندی بە سەرچاوەی ئۆنلاین نەکرا.':'Could not reach the online announcement board.',date:''});
+    setReklam('');
+  }
+}
+
+loadAnnouncement();
+setInterval(loadAnnouncement, 60000);
+const loadingStart=performance.now();
+const progress=document.getElementById('loadingProgress'), percent=document.getElementById('loadingPercent'), loading=document.getElementById('loadingScreen');
+function animateLoading(now){const elapsed=now-loadingStart; const value=Math.min(100,(elapsed/5000)*100); progress.style.width=value+'%'; percent.textContent=Math.floor(value)+'%'; if(value<100) requestAnimationFrame(animateLoading);}
+requestAnimationFrame(animateLoading);
+setTimeout(()=>{loading.classList.add('hidden');document.getElementById('appShell').classList.add('ready');},5000);
+</script>
+
+<script>
+(() => {
+  if (window.__rinaWholeOptionClick) return;
+  window.__rinaWholeOptionClick = true;
+
+  const selectors = [
+    'button',
+    'a',
+    '[role="button"]',
+    '.nav-item',
+    '.nav-btn',
+    '.nav-link',
+    '.menu-item',
+    '.option',
+    '.setting-row',
+    '.setting-card',
+    '.feature-card',
+    '.social-card',
+    '.discord-card',
+    '.youtube-card',
+    '.tiktok-card',
+    '.reklam-card',
+    '[data-page]',
+    '[data-action]'
+  ].join(',');
+
+  const mark = el => {
+    if (!(el instanceof HTMLElement)) return;
+    el.classList.add('rina-option-click');
+  };
+
+  document.querySelectorAll(selectors).forEach(mark);
+
+  document.addEventListener('click', event => {
+    const el = event.target.closest(selectors);
+    if (!el) return;
+    mark(el);
+
+    el.classList.remove('rina-active');
+    void el.offsetWidth;
+    el.classList.add('rina-active');
+
+    const rect = el.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const ripple = document.createElement('span');
+    ripple.className = 'rina-option-ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    el.appendChild(ripple);
+
+    window.setTimeout(() => {
+      ripple.remove();
+      el.classList.remove('rina-active');
+    }, 620);
+  }, true);
+
+  new MutationObserver(mutations => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (!(node instanceof HTMLElement)) continue;
+        if (node.matches?.(selectors)) mark(node);
+        node.querySelectorAll?.(selectors).forEach(mark);
+      }
+    }
+  }).observe(document.body, { childList:true, subtree:true });
+})();
+</script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(console.warn));
+}
+</script>
+</body>
+</html>

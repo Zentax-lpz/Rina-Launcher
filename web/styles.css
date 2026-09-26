@@ -1,0 +1,195 @@
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Segoe UI","Noto Sans Arabic",Arial,sans-serif;color:#fff}body{background:#16050f url("assets/background.png") center/cover fixed no-repeat}.launcher{width:100%;height:100%;display:flex;background:rgba(24,3,15,.24);opacity:0;transition:opacity .45s ease}.launcher.ready{opacity:1}.loading-screen{position:fixed;z-index:9999;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(rgba(22,3,15,.72),rgba(22,3,15,.78)),url("assets/background.png") center/cover no-repeat;transition:opacity .55s ease,visibility .55s ease}.loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}.loading-glow{position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(255,77,178,.18);filter:blur(70px)}.loading-logo{position:relative;font-family:cursive;font-size:96px;line-height:.9;text-shadow:0 0 12px #fff,0 0 34px #ff45b2}.loading-logo span{color:#ff71c5}.loading-sub{position:relative;letter-spacing:9px;font-weight:800;margin-top:10px}.loading-welcome{position:relative;margin-top:28px;font-size:18px;color:#ffd9ec}.loading-bar{position:relative;width:340px;height:7px;margin-top:24px;border:1px solid rgba(255,178,224,.55);border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}.loading-bar div{height:100%;width:0;background:linear-gradient(90deg,#ff5eb9,#ffc4e7);box-shadow:0 0 15px #ff62bb}.loading-screen #loadingPercent{position:relative;margin-top:9px;font-size:12px;color:#ffc5e5}.sidebar{width:322px;flex:0 0 322px;height:100%;padding:25px 18px;background:rgba(35,5,24,.72);border-right:1px solid rgba(255,157,220,.2);backdrop-filter:blur(6px);display:flex;flex-direction:column}.brand{text-align:center;margin:2px 0 28px}.crown{font-size:38px;color:#ff82cf;text-shadow:0 0 15px #ff3da9}.rina-logo{font-family:cursive;font-size:67px;line-height:.84;text-shadow:0 0 7px #fff,0 0 22px #ff45b2}.rina-logo span{color:#ff71c5}.brand-sub{font-weight:800;letter-spacing:7px;font-size:15px;margin-top:10px}.sidebar nav{display:flex;flex-direction:column;gap:8px}.nav{height:54px;border:1px solid transparent;border-radius:10px;background:rgba(20,2,14,.35);color:#f8d4e8;font-size:15px;text-align:left;padding:0 15px;cursor:pointer;display:flex;align-items:center}.nav span{display:inline-flex;width:38px;justify-content:center;color:#ff77c9;font-size:19px;flex:0 0 38px}.nav label{cursor:pointer}.nav:hover,.nav.active{background:linear-gradient(90deg,rgba(255,83,181,.25),rgba(255,132,207,.08));border-color:#ff78c8;color:#fff}.side-bottom{margin-top:auto;text-align:center}.side-quote{font-family:cursive;font-size:19px;line-height:1.05;color:#ffb8df;margin-bottom:25px}.copyright{font-size:11px;color:#f9cbe4;line-height:1.6}.content-area{flex:1;min-width:0;position:relative;overflow:hidden}.titlebar{height:51px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;color:#ffe2f1;font-size:13px;-webkit-app-region:drag}.title-actions{display:flex;align-items:center;gap:10px;-webkit-app-region:no-drag}.quick-lang{border:1px solid rgba(255,173,221,.45);background:rgba(255,74,176,.13);color:#ffe0f0;border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:700}.window-buttons{display:flex;-webkit-app-region:no-drag}.window-buttons button{width:42px;height:32px;border:0;background:transparent;color:#ffe1ef;font-size:19px;cursor:pointer}.window-buttons button:hover{background:rgba(255,255,255,.1)}.page-wrap{height:calc(100% - 51px);padding:0 30px 58px;overflow:auto}.page{display:none}.page.active{display:block}.panel{background:rgba(57,9,36,.43);border:1px solid rgba(255,158,220,.43);border-radius:20px;box-shadow:0 0 30px rgba(255,36,164,.08),inset 0 0 45px rgba(255,177,224,.035);backdrop-filter:blur(7px)}.hero{height:470px;position:relative;overflow:hidden;margin-bottom:22px;padding:48px}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(37,5,26,.58),rgba(50,8,34,.15));pointer-events:none}.hero-copy{position:relative;z-index:2}.pill{display:inline-block;padding:7px 14px;border:1px solid rgba(255,160,220,.45);background:rgba(255,83,181,.18);border-radius:20px}.hero h1{font-size:64px;line-height:.93;margin:17px 0}.hero-copy p{font-size:18px;line-height:1.35;color:#ffe2ef}.big-btn{border:1px solid #ffb1df;background:linear-gradient(90deg,#ff61ba,#d73e98);box-shadow:0 0 20px rgba(255,56,173,.32);color:#fff;font-size:16px;font-weight:700;border-radius:999px;padding:14px 25px;cursor:pointer}.hero-writing{position:absolute;z-index:2;right:40%;top:60px;font-family:cursive;font-size:32px;line-height:1.02;color:#ffc8e6;transform:rotate(-4deg)}.hero-writing span{font-size:40px}.hero-tag{position:absolute;right:27px;bottom:28px;z-index:2;text-align:center;font-size:16px;color:#ffd4e9;line-height:1.25}.four-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.mini-card{height:220px;text-align:center;padding:26px 17px}.big-icon{font-size:41px;color:#ff9bd7;text-shadow:0 0 13px #ff46b2}.mini-card h3{font-size:20px;margin:8px 0}.mini-card p{color:#fbd1e6;font-size:14px;margin-bottom:20px}.mini-card button{border:1px solid #ff9dd7;background:rgba(255,73,174,.16);color:#fff;border-radius:999px;padding:10px 24px;font-weight:700;cursor:pointer}.bottom-row{display:grid;grid-template-columns:2fr 1fr 1.05fr;gap:18px;margin-top:18px}.news,.status,.story{height:150px;padding:20px}.news h3,.status h3,.story h3{margin:0 0 16px}.news div{font-size:13px;color:#ffd5e9;margin:9px 0;display:flex;gap:8px}.news div>span:first-child{display:inline-block;width:112px;flex:0 0 112px}.news-text{width:auto!important;flex:1!important}.online{font-size:25px;color:#4bffb0}.online b{display:inline-block;width:12px;height:12px;background:#45efa4;border-radius:50%;box-shadow:0 0 10px #45efa4;margin-right:8px}.status p,.story p{color:#f7cde4;font-size:13px}.story{display:flex;align-items:center;gap:18px}.heart{font-size:50px;color:#ff9bd6}.inner{max-width:920px;margin:25px auto;padding:45px}.inner h2,.rules-header h2{font-size:39px;margin:0 0 6px;text-shadow:0 0 15px #ff5bb8}.lead,.rules-header p{font-size:20px;color:#ffd3e8}.inner p,.inner li{color:#ffd5e9;line-height:1.7}.credit-block{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,145,209,.25)}.credit-block strong{font-size:20px}.rules-header{padding:20px 5px 12px}.rules-header h2{margin:0}.lang-tabs{display:flex;gap:10px;margin-top:14px}.lang{padding:9px 17px;border-radius:20px;border:1px solid rgba(255,160,220,.4);background:rgba(255,70,170,.1);color:#ffd7ea;cursor:pointer}.lang.active{background:linear-gradient(90deg,#ff61ba,#d73e98);color:#fff}.rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:30px}.rule{min-height:170px;padding:19px}.rule>b{color:#ff7ac9;font-size:14px}.rule h3{margin:8px 0;color:#fff}.rule p{color:#ffd6ea;line-height:1.5}.rtl .rule{text-align:right}.tiktok-box{display:flex;gap:22px;align-items:center}.video-placeholder{width:260px;height:170px;border-radius:16px;background:linear-gradient(135deg,#ff57b7,#5a163f);display:flex;align-items:center;justify-content:center;font-size:65px;color:#fff;box-shadow:0 0 25px rgba(255,55,174,.2)}.setting{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,145,209,.18);gap:20px}.language-switch{display:flex;gap:8px}input{accent-color:#ff62b8}footer{position:absolute;right:28px;bottom:9px;font-size:11px;color:#f3b7d7}.kurdish{font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif}.kurdish .nav{text-align:right}.kurdish .nav span{margin-left:0}.kurdish .hero-copy,.kurdish .mini-card,.kurdish .news,.kurdish .status,.kurdish .story,.kurdish .inner,.kurdish .rules-header{direction:rtl}.kurdish .hero-copy p{line-height:1.55}.kurdish .hero-tag{direction:rtl}.kurdish .titlebar{direction:ltr}.kurdish .side-quote{direction:rtl}.kurdish .copyright{direction:ltr}.kurdish .rules-header{text-align:right}.kurdish .lang-tabs{direction:rtl}.kurdish .setting{direction:rtl}.kurdish .language-switch{direction:ltr}.kurdish footer{direction:ltr}@media(max-width:1250px){.sidebar{width:260px;flex-basis:260px}.four-cards{gap:10px}.hero h1{font-size:54px}.hero-writing{display:none}.bottom-row{grid-template-columns:1.5fr 1fr}.rules-grid{grid-template-columns:repeat(2,1fr)}}
+
+.update-setting { align-items: center; gap: 18px; }
+.update-setting > div { display: flex; flex-direction: column; gap: 4px; }
+.update-setting small { opacity: .72; font-size: 12px; }
+.small-btn { border: 1px solid rgba(255,255,255,.35); background: rgba(255,105,180,.22); color: #fff; border-radius: 999px; padding: 10px 16px; cursor: pointer; font-weight: 700; white-space: nowrap; }
+.small-btn:hover { background: rgba(255,105,180,.38); box-shadow: 0 0 18px rgba(255,105,180,.28); }
+.small-btn:disabled { opacity: .55; cursor: wait; }
+footer { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+
+
+/* YouTube is intentionally disabled until launch. */
+.disabled-nav { opacity: .48; cursor: not-allowed !important; }
+.disabled-nav:hover { transform: none !important; box-shadow: none !important; }
+.disabled-card { opacity: .72; }
+.disabled-card button:disabled, .disabled-page button:disabled { opacity: .55; cursor: not-allowed; }
+.disabled-page { text-align: center; }
+
+
+/* v1.4.0 Sorani RTL layout fixes */
+html, body { min-width: 900px; }
+body.kurdish { font-family:"Noto Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif; }
+body.kurdish .sidebar { text-align:right; }
+body.kurdish .brand { text-align:center; }
+body.kurdish .sidebar nav { direction:rtl; }
+body.kurdish .nav { direction:rtl; text-align:right; justify-content:flex-start; }
+body.kurdish .nav span { margin-left:10px; margin-right:0; }
+body.kurdish .content-area { direction:rtl; }
+body.kurdish .titlebar { direction:ltr; }
+body.kurdish .page-wrap { direction:rtl; }
+body.kurdish .hero { direction:rtl; text-align:right; }
+body.kurdish .hero-copy { max-width:620px; }
+body.kurdish .hero h1 { font-size:56px; line-height:1.08; letter-spacing:0; margin:18px 0 20px; }
+body.kurdish .hero-copy p { font-size:18px; line-height:1.85; margin:0 0 24px; max-width:700px; }
+body.kurdish .hero-copy .big-btn { display:inline-flex; align-items:center; justify-content:center; margin-top:4px; }
+body.kurdish .hero-writing { left:38%; right:auto; text-align:center; direction:rtl; }
+body.kurdish .hero-tag { right:27px; left:auto; direction:rtl; }
+body.kurdish .four-cards { direction:rtl; }
+body.kurdish .mini-card { text-align:center; }
+body.kurdish .bottom-row { direction:rtl; }
+body.kurdish .news div { direction:rtl; }
+body.kurdish .news div>span:first-child { width:112px; flex:0 0 112px; }
+body.kurdish .inner { direction:rtl; text-align:right; }
+body.kurdish .inner h2 { line-height:1.35; margin-bottom:12px; }
+body.kurdish .lead { line-height:1.75; margin:0 0 18px; }
+body.kurdish .inner p, body.kurdish .inner li { line-height:2; }
+body.kurdish .credit-block { text-align:right; }
+body.kurdish .rules-header { direction:rtl; text-align:right; }
+body.kurdish .rules-header h2 { line-height:1.35; margin-bottom:10px; }
+body.kurdish .rules-header p { line-height:1.7; margin:0 0 12px; }
+body.kurdish .lang-tabs { direction:rtl; justify-content:flex-start; }
+body.kurdish .rules-grid { direction:rtl; }
+body.kurdish .rule { text-align:right; }
+body.kurdish .rule h3 { line-height:1.45; margin:10px 0 7px; }
+body.kurdish .rule p { line-height:1.85; margin:0; }
+body.kurdish .setting { direction:rtl; text-align:right; }
+body.kurdish .setting > span { flex:1; }
+body.kurdish .language-switch { direction:ltr; }
+body.kurdish footer { direction:ltr; }
+.tiktok-live-status { display:flex; align-items:center; gap:10px; margin:0 0 18px; padding:12px 16px; border:1px solid rgba(255,158,220,.32); background:rgba(30,4,20,.25); border-radius:14px; }
+.tiktok-live-status .live-dot { width:10px; height:10px; border-radius:50%; background:#aaa; box-shadow:0 0 8px rgba(255,255,255,.18); flex:0 0 10px; }
+.tiktok-live-status strong { font-size:13px; letter-spacing:1px; }
+.tiktok-live-status small { opacity:.72; font-size:12px; }
+body.kurdish .tiktok-live-status { direction:rtl; justify-content:flex-start; }
+@media(max-width:1100px){
+  body.kurdish .hero h1 { font-size:48px; }
+  body.kurdish .hero-copy p { font-size:16px; }
+}
+
+
+/* v1.5.0 online announcement board */
+.announcement-board{margin-top:18px;padding:20px 22px;}
+.announcement-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.announcement-kicker{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#ff91d3;margin-bottom:5px;}
+.announcement-board h3{margin:0;font-size:23px;}
+.announcement-date{font-size:11px;color:#f0b9d8;white-space:nowrap;}
+.announcement-message{margin:12px 0 14px;color:#ffe0ef;font-size:16px;line-height:1.6;min-height:25px;}
+.announcement-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;}
+.live-badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 12px;border:1px solid rgba(255,255,255,.2);font-size:11px;font-weight:800;letter-spacing:.8px;}
+.live-badge .badge-dot{width:9px;height:9px;border-radius:50%;background:#aaa;box-shadow:0 0 7px rgba(255,255,255,.2);}
+.live-badge.live{border-color:rgba(255,80,120,.7);background:rgba(255,40,90,.16);color:#ffd7e2;}
+.live-badge.live .badge-dot{background:#ff3f67;box-shadow:0 0 12px #ff3f67;}
+.live-badge.offline{color:#e7bfd4;}
+.announcement-board-large{margin-top:20px;padding:26px;}
+.announcement-board-large .announcement-message{font-size:20px;min-height:60px;}
+.online-note{opacity:.62;font-size:12px!important;margin-top:18px;}
+body.kurdish .announcement-board{direction:rtl;text-align:right;}
+body.kurdish .announcement-footer{direction:rtl;}
+body.kurdish .announcement-head{direction:rtl;}
+body.kurdish .announcement-date{direction:ltr;}
+body.kurdish .updates-page{text-align:right;}
+@media(max-width:1100px){.announcement-board{padding:17px}.announcement-board h3{font-size:19px}.announcement-message{font-size:14px}}
+
+body.kurdish .tiktok-live-status.is-live { border-color:rgba(255,63,103,.65); background:rgba(255,40,90,.12); }
+body.kurdish .tiktok-live-status.is-live strong { color:#ffd8e1; }
+.tiktok-live-status.is-live { border-color:rgba(255,63,103,.65); background:rgba(255,40,90,.12); }
+.tiktok-live-status.is-live strong { color:#ffd8e1; }
+
+/* ===== Rina Launcher v2.1 Premium Upgrade ===== */
+html,body{scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+html::-webkit-scrollbar,body::-webkit-scrollbar,*::-webkit-scrollbar{width:0!important;height:0!important}
+button,.nav,.mini-card,.panel,.small-btn,.lang,a,input{transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease,opacity .22s ease}
+button:not(:disabled):hover,.nav:not(:disabled):hover{transform:translateY(-2px)}
+button:not(:disabled):active{transform:translateY(0) scale(.97)}
+.nav:not(:disabled)::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;box-shadow:0 0 22px rgba(255,95,190,.3);transition:opacity .22s}
+.nav:not(:disabled):hover::after{opacity:1}
+.discord-showcase{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:520px}
+.discord-orb{width:116px;height:116px;border-radius:36px;display:flex;align-items:center;justify-content:center;font-size:58px;color:#fff;background:radial-gradient(circle at 35% 30%,#ff9bd6,#e54da7 55%,#7b1d55);box-shadow:0 0 30px rgba(255,73,174,.45);animation:discordPulse 2.1s ease-in-out infinite,discordFloat 3.8s ease-in-out infinite}
+@keyframes discordPulse{0%,100%{box-shadow:0 0 24px rgba(255,73,174,.35);transform:scale(1)}50%{box-shadow:0 0 44px rgba(255,73,174,.7);transform:scale(1.045)}}
+@keyframes discordFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.discord-showcase h2{margin-top:24px}.discord-showcase ul{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;padding:0;list-style:none;max-width:720px}.discord-showcase li{color:#ffd7e9}
+.reklam-page{text-align:center}.reklam-icon{font-size:52px;color:#ff78c6;animation:reklamFloat 2.8s ease-in-out infinite}.reklam-box{margin:28px auto 0;max-width:760px;padding:28px;border:1px solid rgba(255,150,215,.24);border-radius:22px;background:rgba(24,4,17,.28);backdrop-filter:blur(16px)}
+.reklam-label{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:#ff9ed6;margin-bottom:10px}.reklam-box a{display:block;color:#ffd8ed;font-size:18px;word-break:break-all;text-decoration:none;margin-bottom:22px}.reklam-box a:hover{color:#fff;text-shadow:0 0 16px rgba(255,100,190,.7)}
+@keyframes reklamFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.no-blur .panel,.no-blur .reklam-box{backdrop-filter:none}.no-pink{filter:saturate(.7)}.no-animations *, .no-animations *::before,.no-animations *::after{animation:none!important;transition:none!important}
+body.kurdish .hero h1{font-size:39px;line-height:1.25;margin:14px 0 14px;font-weight:700}
+body.kurdish .hero-copy p{font-size:14px;line-height:1.9;margin-bottom:18px;max-width:620px}
+body.kurdish .hero-copy .big-btn{font-size:13px;padding:11px 18px}
+body.kurdish .inner h2{font-size:28px;line-height:1.45}.kurdish .lead,.kurdish .rules-header p{font-size:14px;line-height:1.9}.kurdish .inner p,.kurdish .inner li{font-size:14px;line-height:1.9}.kurdish .mini-card h3{font-size:15px}.kurdish .mini-card p{font-size:12px}.kurdish .nav label{font-size:13px}
+body.kurdish .rule h3{font-size:15px}body.kurdish .rule p{font-size:13px;line-height:1.9}
+.music-setting small{opacity:.7;font-size:12px}.setting input{width:18px;height:18px;cursor:pointer}
+
+
+/* v2.1 Kurdish screenshot match */
+body.kurdish .hero { position:relative; }
+body.kurdish .hero-copy {
+  position:absolute;
+  z-index:3;
+  right:54px;
+  left:auto;
+  top:42px;
+  width:min(650px, 48%);
+  max-width:none;
+  text-align:right;
+  direction:rtl;
+}
+body.kurdish .hero h1 {
+  font-size:56px;
+  line-height:1.18;
+  font-weight:800;
+  margin:8px 0 20px;
+  color:#fff;
+  text-shadow:0 0 12px rgba(255,255,255,.08);
+}
+body.kurdish .hero-copy p {
+  font-size:15px;
+  line-height:1.9;
+  font-weight:400;
+  color:#f6dce9;
+  margin:0 0 22px;
+  max-width:650px;
+}
+body.kurdish .hero-copy .pill { display:none; }
+body.kurdish .hero-copy .big-btn { margin-top:2px; }
+
+
+/* v2.1.2 fixes: clean Kurdish hero, working background effects, no music UI */
+#particleCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.8}
+.launcher{position:relative;z-index:1}
+.sidebar,.content-area,.titlebar,.page-wrap,footer{position:relative;z-index:2}
+.no-particles #particleCanvas{display:none!important}
+/* Make blur toggle visibly affect all glass surfaces */
+body.no-blur .panel,
+body.no-blur .sidebar,
+body.no-blur .reklam-box,
+body.no-blur .announcement-board{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body:not(.no-blur) .panel,
+body:not(.no-blur) .sidebar,
+body:not(.no-blur) .reklam-box,
+body:not(.no-blur) .announcement-board{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+/* Kurdish hero: prevent the button/text collision shown in the screenshot */
+body.kurdish .hero{min-height:470px;overflow:hidden}
+body.kurdish .hero-copy{right:42px;top:34px;width:46%;max-width:620px}
+body.kurdish .hero h1{font-size:40px!important;line-height:1.22!important;margin:8px 0 14px!important;max-width:620px}
+body.kurdish .hero-copy p{font-size:13px!important;line-height:1.8!important;margin:0 0 16px!important;max-width:620px}
+body.kurdish .hero-copy .big-btn{font-size:12px!important;padding:9px 16px!important;position:relative;z-index:5}
+body.kurdish .hero-writing{left:48px!important;right:auto!important;top:52px!important;font-size:20px!important;line-height:1.2!important;z-index:2!important;max-width:180px}
+body.kurdish .hero-writing span{font-size:24px!important}
+body.kurdish .hero-tag{left:46px!important;right:auto!important;bottom:34px!important;font-size:12px!important;line-height:1.35!important;max-width:180px}
+body.kurdish .hero-tag small{font-size:10px!important}
+@media(max-width:1100px){
+ body.kurdish .hero-copy{right:30px;width:52%}
+ body.kurdish .hero-writing,body.kurdish .hero-tag{display:none}
+ body.kurdish .hero h1{font-size:34px!important}
+}
+
+/* Discord icon — inline official-style mark, no external icon library required */
+.discord-svg{width:1em;height:1em;display:block;fill:currentColor;flex:none}
+.nav-discord-icon{display:inline-flex!important;align-items:center;justify-content:center;color:#ff77c9}
+.nav-discord-icon .discord-svg{width:20px;height:20px}
+.btn-discord-icon{display:inline-flex;vertical-align:-3px;color:currentColor}
+.btn-discord-icon .discord-svg{width:18px;height:18px}
+.discord-orb .discord-svg{width:62px;height:62px;filter:drop-shadow(0 0 9px rgba(255,255,255,.28))}
+.discord-mini-icon{display:flex;align-items:center;justify-content:center}
+.discord-mini-icon .discord-svg{width:41px;height:41px}
